@@ -22,7 +22,11 @@ const ViewAllStories = ({ onClose, current, setCurrent, stories }: Props) => {
       const elapsedTime = Date.now() - startTime;
       const percentage = Math.min(100, (elapsedTime / totalTime) * 100);
       setProgress(percentage);
-      if (elapsedTime >= totalTime) clearInterval(interval);
+      if (elapsedTime >= totalTime) {
+        clearInterval(interval);
+        if(!(current === stories?.[stories?.length - 1])) handleStoryChange(Math.min(current + 1, stories[stories.length - 1]));
+        else onClose()
+      };
     };
 
     if (!paused) interval = setInterval(updateProgress, 50);
